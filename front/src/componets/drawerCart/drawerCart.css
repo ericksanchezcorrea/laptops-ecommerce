@@ -1,0 +1,23 @@
+.stack-drawer{
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid rgba(0, 0, 0, 0.497);
+    border-radius: 5px;
+}
+
+.stack-drawer p{
+    font-size: 14px;
+}
+
+.stack-drawer div{
+    display: flex;
+    justify-content: center;
+}
+
+.button-actions{
+    margin-bottom: 10px;
+}
+
+
+
+
