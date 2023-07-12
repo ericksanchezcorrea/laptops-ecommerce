@@ -18,7 +18,8 @@ const Principal = () =>{
     let filter = searchParams.get('filter') || ""
     
     const callApi = async () => {
-        const data = await getApi(`${REACT_APP_BASE_URL}/api/laptops`);
+        const data = await getApi(`${REACT_APP_BASE_URL}/api/laptops`)
+        
         dispatch(GuardarLista(data)) 
     };
     
@@ -42,8 +43,9 @@ const Principal = () =>{
 
             <Grid container spacing={2}>
                 {   laptops.filter((laptop) => {
-                    if (!filter) return true;
-                    return laptop.specifications.model.toLowerCase().includes(filter.toLowerCase() ) })
+                    if(!filter) return true;
+                    return laptop.specifications.model.toLowerCase().includes(filter.toLowerCase())})
+                    .filter(laptop => laptop.visible === true)
                     .map((laptop, index) =>(
                     <Grid item xs={12} sm={6} md={4} lg={3} 
                         key={index}> 

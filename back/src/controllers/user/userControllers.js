@@ -24,7 +24,6 @@ export const loginUser = async (req, res) =>{
     try {
         const {email} = req.body
         const user = await User.findOne({ where: { email } });
-        console.log(user)
         if(!user) return res.status(500).json({error: "Unregistered user"})
 
         if(user.id){

@@ -11,6 +11,7 @@ export const  getLaptops = async (req, res)=>{
             const newLaptop = {
                 id: laptop.id,
                 stock: laptop.stock,
+                visible: laptop.visible,
                 specifications:{
                     brand: laptop.brand,
                     model:laptop.model,
@@ -42,6 +43,7 @@ export const  getLaptops = async (req, res)=>{
                 return{
                     id: p.id,
                     stock: p.stock,
+                    visible: p.visible,
                     specifications:{
                         brand: p.brand,
                         model:p.model,
@@ -109,6 +111,9 @@ export const  createAllLaptops = async (req, res)=>{
 export const createNewLaptop = async (req, res) =>{
     try {
         const p = req.body
+
+        const laptopFound = await Laptop.findOne({where:{model: p.model}} )
+        if(laptopFound) return res.status(404).json({error : 'This model already exists'})   
     
         const laptopCreated = await Laptop.create({ 
             brand: p.brand === '' ? null: p.brand ,
@@ -139,4 +144,68 @@ export const createNewLaptop = async (req, res) =>{
     }
 
 
+}
+
+export const updateLaptop = async (req, res) =>{
+    try {
+        const {id} = req.params
+        const {brand, model, sku, height, width, offert, price, processor, type_of_hard_drive, hard_drive_capacity, ram, wi_fi, resolution, position1, position2, position3, position4, position5, stock, visible} =  req.body   
+    
+        const laptopFound = await Laptop.findOne({where:{id}});
+        if(!laptopFound) return res.status(404).json({error: "Laptop not found"})
+
+        const updateFields = {}
+        if (stock && typeof stock !== 'undefined' && typeof stock === 'number') updateFields.stock = stock
+        if (price && typeof price !== 'undefined' && typeof price === 'number') updateFields.price = price
+        if (offert && typeof offert !== 'undefined' && typeof offert === 'number') updateFields.offert = offert
+        if (brand && typeof brand !== 'undefined') updateFields.brand = brand
+        if (model && typeof model !== 'undefined') updateFields.model = model
+        if (sku && typeof sku !== 'undefined') updateFields.sku = sku
+        if (height && typeof height !== 'undefined') updateFields.height = height
+        if (width && typeof width !== 'undefined') updateFields.width = width
+        if (processor && typeof processor !== 'undefined') updateFields.processor = processor
+        if (type_of_hard_drive && typeof type_of_hard_drive !== 'undefined') updateFields.type_of_hard_drive = type_of_hard_drive
+        if (hard_drive_capacity && typeof hard_drive_capacity !== 'undefined') updateFields.hard_drive_capacity = hard_drive_capacity
+        if (ram && typeof ram !== 'undefined') updateFields.ram = ram
+        if (wi_fi && typeof wi_fi !== 'undefined') updateFields.wi_fi = wi_fi
+        if (resolution && typeof resolution !== 'undefined') updateFields.resolution = resolution
+        if (position1 && typeof position1 !== 'undefined') updateFields.position1 = position1
+        if (position2 && typeof position2 !== 'undefined') updateFields.position2 = position2
+        if (position3 && typeof position3 !== 'undefined') updateFields.position3 = position3
+        if (position4 && typeof position4 !== 'undefined') updateFields.position4 = position4
+        if (position5 && typeof position5 !== 'undefined') updateFields.position5 = position5
+        if (typeof visible === 'boolean') updateFields.visible = visible
+
+        await Laptop.update(
+            updateFields,
+            {where:{id}}
+        );
+
+        return res.status(200).json({message: 'ok'})
+        
+    } catch (error) {
+        console.log(error.message)
+        return res.status(404).json({error : error.message})   
+    }
+   
+}
+
+export const deleteLaptop = async (req, res) =>{
+    try {
+        const {id} = req.params
+        const laptopFound = await Laptop.findOne({where:{id}});
+        if(!laptopFound) return res.status(200).json({error: "Laptop not found"})
+    
+        await Laptop.update(
+            { visible: false },
+            { where: { id } }
+        );
+    
+        const laptopUpdated = await Laptop.findByPk(id);
+        console.log(laptopUpdated)
+        return res.status(200).json({message: 'ok'})
+
+    } catch (error) {
+        return res.status(404).json({error : error.message})   
+    }
 }

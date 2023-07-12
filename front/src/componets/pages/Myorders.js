@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux'
 import { Grid, Typography,  Box, Button, Stack} from '@mui/material'
 import { token, uid } from '../../firebase/firebase'
 import { REACT_APP_BASE_URL } from '../../config'
+import Spinner from '../spinner/Spinner'
 
 
 const Myorders = () => {
@@ -39,10 +40,13 @@ const Myorders = () => {
             <Stack>
                 <Typography variant="h3" mb={2}>Myorders</Typography>
             </Stack>
+            
 
             <Stack justify="center" alignItems="center" gap='10px'>
                 {
-                    orders && orders.map((order,i)=>(
+                    orders ?
+
+                    orders?.map((order,i)=>(
                         <Stack direction='row' justifyContent="space-between" alignItems="center" 
                             key={i} style={{boxShadow: 'rgba(0, 0, 0, 0.35) 0px 5px 15px', padding:'10px', width:'500px'}}>
 
@@ -59,6 +63,9 @@ const Myorders = () => {
                             
                         </Stack>
                     ))
+                    :
+                    <Spinner />
+                    
                 }
             </Stack>
         </Stack>

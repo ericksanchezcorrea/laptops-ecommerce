@@ -14,7 +14,8 @@ export const Laptop = sequelize.define('Laptop', {
   },
   model: {
     type: DataTypes.STRING,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   height: {
     type: DataTypes.STRING,
@@ -77,7 +78,11 @@ export const Laptop = sequelize.define('Laptop', {
   },
   stock:{
     type:DataTypes.INTEGER,
-    allowNull:true
+    allowNull:false
+  },
+  visible:{
+    type:DataTypes.BOOLEAN,
+    defaultValue: true,
   },
 }, 
 { timestamps: false }
