@@ -189,7 +189,7 @@ const Checkout = () => {
                                         </label>
                                     </Stack>    
 
-                                    <Stack p={2} >
+                                    <Stack p={2} sx={{'flex':1}} >
                                         <Typography variant='body1'>{a.city}, {a.country}</Typography>
                                         <Typography variant='body1'>{a.state}</Typography>
                                         <Typography variant='body1'>{a.reference}</Typography>

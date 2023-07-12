@@ -27,7 +27,7 @@ export const Address = sequelize.define(
     },
     postalCode: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
     },
     reference:{
         type: DataTypes.STRING,
