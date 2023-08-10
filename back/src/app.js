@@ -26,6 +26,12 @@ app.use((req, res, next) => {
     next();
 })
 
+// Ruta de bienvenida
+app.get('/', (req, res) => {
+    res.status(200).json({message:'Welcome to my project. Check the other routes like "/api/laptops"'});
+});
+
+
 app.use('/api', usersRoutes)
 app.use('/api', laptopsRoutes)
 app.use('/api', paymentRoutes)
