@@ -7,7 +7,7 @@ async function main (){
     try {
         await sequelize.sync({force: false});
         app.listen(PORT)
-        console.log('server running on port', PORT)
+        // console.log('server running on port', PORT)
     } catch (error) {
         console.error('Unable to connect to the database:', error);
     }    
